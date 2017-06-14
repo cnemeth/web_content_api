@@ -10,4 +10,5 @@
 #
 
 class Webcontent < ApplicationRecord
+  validates :url, presence: true
 end
