@@ -4,26 +4,52 @@ RSpec.describe FetchWebContent do
   let(:url) { 'https://github.com/cnemeth' }
 
   describe 'call' do
-    before { @response = FetchWebContent.new(url: url).call }
+    context 'with valid url' do
+      let(:web_content_fetcher) { FetchWebContent.new(url: url) }
 
-    it 'response code' do
-      expect(@response.status_code).to eq 200
+      before { @response = web_content_fetcher.call }
+
+      it 'response object' do
+        expect(@response).to be_a_kind_of FetchWebContent::Result
+      end
+
+      it 'response code' do
+        expect(@response.status_code).to eq 200
+      end
+
+      it 'response message' do
+        expect(@response.status_message).to eq 'OK'
+      end
+
+      it 'headers' do
+        expect(@response.headers).to be_a_kind_of Typhoeus::Response::Header
+      end
+
+      it 'response body' do
+        expect(@response.body).to be_a_kind_of Nokogiri::HTML::Document
+      end
     end
 
-    it 'response message' do
-      expect(@response.status_message).to eq 'OK'
-    end
+    context 'with invalid url' do
+      let(:web_content_fetcher) { FetchWebContent.new(url: 'foo_bar') }
 
-    it 'response object' do
-      expect(@response).to be_a_kind_of FetchWebContent::Result
-    end
+      before { @response = web_content_fetcher.call }
 
-    it 'headers' do
-      expect(@response.headers).to be_a_kind_of Typhoeus::Response::Header
-    end
+      it 'response object' do
+        expect(@response).to be_a_kind_of FetchWebContent::Result
+      end
 
-    it 'response body' do
-      expect(@response.body).to be_a_kind_of Nokogiri::HTML::Document
+      it 'response code' do
+        expect(@response.status_code).to eq 0
+      end
+
+      it 'response message' do
+        expect(@response.status_message).to be_nil
+      end
+
+      it 'headers' do
+        expect(@response.headers).to eq({})
+      end
     end
   end
 end

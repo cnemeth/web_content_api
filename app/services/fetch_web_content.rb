@@ -10,7 +10,12 @@ class FetchWebContent
 
   def call
     return nil if url.empty?
+    fetch_content
+  end
 
+  private
+
+  def fetch_content
     request = Typhoeus::Request.new(url)
     request.run
     response = request.response
@@ -27,8 +32,6 @@ class FetchWebContent
                body: body,
                total_time: time)
   end
-
-  private
 
   def defaults
     {
