@@ -31,6 +31,13 @@ gem 'active_model_serializers'
 # Nokogiri is an HTML, XML, SAX, and Reader parser
 gem 'nokogiri'
 
+# Typhoeus wraps libcurl in order to make fast and reliable requests
+gem 'typhoeus'
+
+# An immutable implementation of Ruby's Struct class.
+# It works just as Struct, but there are no setters, and you can't use []=
+gem 'immutable_struct'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
