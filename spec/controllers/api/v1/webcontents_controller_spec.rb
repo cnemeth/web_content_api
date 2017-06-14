@@ -5,7 +5,7 @@ RSpec.describe Api::V1::WebcontentsController, type: :request do
     let(:params) {
       {
         webcontent: {
-          url: 'https://github.com/cnemeth'
+          url: Faker::Internet.url
         }
       }
     }
@@ -22,7 +22,6 @@ RSpec.describe Api::V1::WebcontentsController, type: :request do
     end
 
     it 'retrieves the webpage for the url' do
-      skip
       post 'api/v1/webcontents', params
       expect(Webcontent.last.content).to_not be_empty
     end
