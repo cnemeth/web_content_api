@@ -52,3 +52,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Misc. Utilities
 gem 'awesome_print'
+gem 'annotate'
