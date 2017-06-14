@@ -6,8 +6,12 @@ module Api
       # POST /api/v1/webcontents
       def create
         webcontent = Webcontent.new(permitted_params)
-        body = @web_content_fetcher.call.body
-        webcontent.content = body
+        response = @web_content_fetcher.call
+        webcontent.content = response.body
+        webcontent.status_code = response.status_code
+        webcontent.status_message = response.status_message
+        webcontent.headers = response.headers
+        webcontent.total_time = response.total_time
 
         if webcontent.save
           render json: webcontent, status: :created
@@ -19,7 +23,7 @@ module Api
       private
 
       def permitted_params
-        params.require(:webcontent).permit(:url, :content)
+        params.require(:webcontent).permit(:url, :content, :status_code, :status_message, :headers, :total_time)
       end
 
       def web_content_fetcher
